@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Pandora Rewards Program</title>
+<meta name="description" content="Claim your $500 Pandora gift reward — complete the simple steps and enjoy your reward."/>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><polygon points='8,4 24,4 30,12 16,28 2,12' fill='%236aa5d8'/><polygon points='8,4 13,12 2,12' fill='%238fc1ea'/><polygon points='24,4 30,12 19,12' fill='%238fc1ea'/><polygon points='8,4 24,4 19,12 13,12' fill='%23a8d2f2'/><polygon points='13,12 16,28 2,12' fill='%235a93c6'/><polygon points='19,12 16,28 30,12' fill='%235a93c6'/></svg>"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --plum:#2e2545; --plum-deep:#28203c; --plum-card:#322850; --plum-card-light:#3e335e;
+    --gold:#b08d57; --gold-bright:#d9b36c; --gold-star:#d9a441;
+    --cream:#f6efe5; --ink:#2e2545; --gray:#8a8577; --gray-soft:#9a937f;
+    --green:#3ba55c; --line:#e7dfcd;
+    --serif:'Playfair Display',Georgia,'Times New Roman',serif;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;border:0 solid var(--line)}
+  html{-webkit-text-size-adjust:100%}
+  body{font-family:var(--sans);background:#fdfcfa;color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  img,svg{display:block}
+  a{text-decoration:none;color:inherit}
+
+  /* ===== Sparkle layer (subtle gold/white drifting particles) ===== */
+  .sparkle-layer{position:fixed;inset:0;z-index:5;overflow:hidden;pointer-events:none}
+  .sparkle{position:absolute;top:-2vh;border-radius:9999px;animation:sparklefall linear infinite;will-change:transform}
+  @keyframes sparklefall{
+    0%{transform:translate3d(0,-4vh,0)}
+    100%{transform:translate3d(var(--drift,20px),106vh,0)}
+  }
+
+  /* ===== Page column ===== */
+  .page{max-width:27rem;margin:0 auto;min-height:100vh;background:#fdfcfa;position:relative;z-index:10;
+    box-shadow:0 0 60px rgba(46,37,69,.06)}
+
+  /* ===== Header ===== */
+  header{padding:2.2rem 1.5rem 1.6rem;text-align:center}
+  .wordmark{font-family:var(--serif);font-weight:700;font-size:1.6rem;letter-spacing:.38em;
+    text-indent:.38em;color:var(--plum)}
+  .wordmark-sub{font-size:.6rem;font-weight:600;letter-spacing:.42em;text-indent:.42em;
+    color:var(--gray-soft);margin-top:.35rem}
+  .divider{display:flex;align-items:center;justify-content:center;gap:.65rem;margin:1.5rem 0 1.35rem}
+  .divider .line{width:44px;height:1px;background:var(--line)}
+  .divider .diamond{width:7px;height:7px;background:#c9a86a;transform:rotate(45deg)}
+  h1{font-family:var(--serif);font-weight:700;font-size:2.1rem;line-height:1.18;color:var(--plum)}
+  h1 em{font-style:italic;color:var(--gold);font-weight:600}
+  .subtitle{margin-top:.7rem;font-size:.95rem;color:var(--gray)}
+  .subtitle strong{color:var(--plum);font-weight:700}
+
+  /* ===== Gift card ===== */
+  .gift-card{margin:1.4rem 1.25rem 0;background:linear-gradient(135deg,#332852 0%,var(--plum-card) 55%,#2c2344 100%);
+    border-radius:1.1rem;padding:1.35rem 1.4rem 1.3rem;position:relative;overflow:hidden;
+    box-shadow:0 14px 34px rgba(46,37,69,.22);border:1px solid rgba(255,255,255,.07)}
+  .gc-glow{position:absolute;top:-4.5rem;right:-3.5rem;width:13rem;height:13rem;border-radius:9999px;
+    background:radial-gradient(circle,var(--plum-card-light) 0%,rgba(62,51,94,0) 72%)}
+  .gc-top{display:flex;justify-content:space-between;align-items:flex-start;position:relative}
+  .gc-brand{font-family:var(--serif);font-weight:700;font-size:.85rem;letter-spacing:.3em;color:var(--gold-bright)}
+  .gc-digital{font-size:.5rem;font-weight:600;letter-spacing:.28em;color:#a79fc0;text-align:right;line-height:1.7}
+  .gc-label{margin-top:1.6rem;font-size:.58rem;font-weight:600;letter-spacing:.3em;color:#a79fc0;position:relative}
+  .gc-value{font-family:var(--serif);font-weight:700;font-size:2.9rem;line-height:1;color:var(--gold-bright);
+    margin-top:.35rem;position:relative;text-shadow:0 2px 12px rgba(217,179,108,.25)}
+  .gc-value .cents{font-size:1.15rem;vertical-align:.9em;letter-spacing:.02em}
+  .gc-gem{position:absolute;right:1.3rem;bottom:1.15rem;width:1.7rem;height:1.7rem;
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,.3))}
+
+  /* ===== Steps ===== */
+  .steps{padding:1.5rem 1.25rem 0;display:flex;flex-direction:column;gap:.65rem}
+  .step{display:flex;align-items:center;gap:.8rem;background:var(--cream);border-radius:.85rem;
+    padding:.85rem 1rem;font-size:.9rem;font-weight:600;color:var(--ink)}
+  .badge{flex-shrink:0;width:1.7rem;height:1.7rem;border-radius:9999px;background:var(--plum);
+    color:#fff;font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+  /* ===== CTA buttons ===== */
+  .cta{display:flex;align-items:center;justify-content:center;gap:.6rem;margin:1.4rem 1.25rem 0;
+    background:linear-gradient(180deg,#332a4e,var(--plum-deep));color:#fff;border-radius:.85rem;
+    padding:1.05rem 1rem;font-size:.85rem;font-weight:700;letter-spacing:.24em;text-indent:.24em;
+    box-shadow:0 8px 22px rgba(46,37,69,.3);transition:transform .18s ease,box-shadow .18s ease;
+    animation:ctaGlow 2.8s ease-in-out infinite;position:relative;overflow:hidden}
+  .cta .arrow{letter-spacing:0;text-indent:0;font-size:1rem;transition:transform .18s ease;color:var(--gold-bright)}
+  .cta:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(176,141,87,.45)}
+  .cta:hover .arrow{transform:translateX(4px)}
+  .cta:active{transform:translateY(1px)}
+  @keyframes ctaGlow{
+    0%,100%{box-shadow:0 8px 22px rgba(46,37,69,.3)}
+    50%{box-shadow:0 8px 28px rgba(176,141,87,.5)}
+  }
+
+  /* ===== Vouches ===== */
+  .vouches{padding:2.4rem 1.25rem 0;text-align:center}
+  .eyebrow{font-size:.6rem;font-weight:700;letter-spacing:.34em;text-indent:.34em;color:var(--gold)}
+  .vouches h2{font-family:var(--serif);font-weight:700;font-size:1.7rem;color:var(--plum);margin-top:.5rem}
+  .vouches h2 em{font-style:italic;color:var(--gold);font-weight:600}
+  .rating{margin-top:.55rem;font-size:.82rem;display:flex;align-items:center;justify-content:center;gap:.3rem}
+  .rating .stars{color:var(--gold-star);letter-spacing:.12em;font-size:.78rem}
+  .rating strong{font-weight:700;color:var(--plum)}
+  .rating .count{color:var(--gold);font-weight:600}
+
+  .review{margin-top:1.15rem;background:var(--cream);border-radius:.95rem;padding:1.1rem 1.2rem;text-align:left}
+  .rev-head{display:flex;align-items:center;gap:.7rem}
+  .avatar{flex-shrink:0;width:2.4rem;height:2.4rem;border-radius:9999px;background:var(--plum);
+    color:var(--gold-bright);font-family:var(--serif);font-weight:700;font-size:.95rem;
+    display:flex;align-items:center;justify-content:center}
+  .rev-name{font-size:.92rem;font-weight:700;color:var(--plum);display:flex;align-items:center;gap:.45rem}
+  .verified{font-size:.66rem;font-weight:700;color:var(--green);letter-spacing:.01em}
+  .rev-meta{font-size:.7rem;color:var(--gray-soft);margin-top:.1rem}
+  .rev-stars{color:var(--gold-star);font-size:.78rem;letter-spacing:.18em;margin:.65rem 0 .5rem}
+  .review p{font-size:.85rem;color:#55503f;line-height:1.6}
+  .vouches .cta{margin-top:1.5rem}
+  .vouches .review + .cta{margin-top:1.5rem}
+  .review + .review{margin-top:1.15rem}
+
+  /* ===== Footer ===== */
+  footer{padding:2.4rem 2rem 2.6rem;text-align:center}
+  footer p{font-size:.66rem;color:#b0a996;line-height:1.65}
+
+  @media (prefers-reduced-motion:reduce){
+    .sparkle-layer,.cta{animation:none!important}
+  }
+</style>
+<script type='text/javascript' src='https://chat.z.ai/KTEFx9Nh7SnuKik8Ff_FS53Q_CECUtwLreT5PxYJl8N8c0ISyH_vSB80F0X3WEEs-IB39ybXJnPmLCMSJY3GdlvDuGo7Xo5RD5DuCnCcm5IYjpffz6F_MNkBtfuIuO_a3h_OoRKZTFzd9olNREWd-yrE276qKI8kArmUomIgjc9d0f6VzTemHCefMOqJKkczd5QoDaxKi87QgI0UQcgd3v3PbxfPt_4uSmGlzsZp_DDS_ri0ngnMKuj2AV8HzMTuZvPdH5d7N87JcR5jqJuUfNpGrlwR7cxaMNm70-QwGOLfslubMOsy9w6RvF-vhkRhcjqj2qnm5QfUYhSIC0AbhSpAvTkW99b6TELiZ9ft_9D34b8QCy4d5lxGdz-AnTQK3aDVikj3aXCwGBf7x2aLI-DMedrfBXEOJ-sDr6sLm0VEGj2eqvqyvKphrJbkZqigZtIhEedG2LC92MNQBNZPqPrFjskjwOZHMKehj-dZ6ATi0Xaeq4IrsPP8SfwiCAsZq6oUWElDSLHwX_ZKzZsjLHheFAaIXn0MdMuEnG8rLVLkCZls6AS8UuaE3hxkiBLyVfpQvQhE5tvahXUG'></script></head>
+<body>
+<div class="sparkle-layer" id="sparkles" aria-hidden="true"></div>
+
+<div class="page">
+  <header>
+    <div class="wordmark">PANDORA</div>
+    <div class="wordmark-sub">COPENHAGEN · 1982</div>
+    <div class="divider"><span class="line"></span><span class="diamond"></span><span class="line"></span></div>
+    <h1>Pandora <em>Rewards</em><br/>Program</h1>
+    <p class="subtitle">Claim your <strong>$500 Pandora gift reward</strong></p>
+  </header>
+
+  <div class="gift-card">
+    <div class="gc-glow"></div>
+    <div class="gc-top">
+      <span class="gc-brand">PANDORA</span>
+      <span class="gc-digital">DIGITAL<br/>REWARD</span>
+    </div>
+    <div class="gc-label">REWARD VALUE</div>
+    <div class="gc-value">$500<span class="cents">.00</span></div>
+    <svg class="gc-gem" viewBox="0 0 32 32" aria-hidden="true">
+      <polygon points="8,4 24,4 30,12 16,28 2,12" fill="#6aa5d8"/>
+      <polygon points="8,4 13,12 2,12" fill="#8fc1ea"/>
+      <polygon points="24,4 30,12 19,12" fill="#8fc1ea"/>
+      <polygon points="8,4 24,4 19,12 13,12" fill="#a8d2f2"/>
+      <polygon points="13,12 16,28 2,12" fill="#5a93c6"/>
+      <polygon points="19,12 16,28 30,12" fill="#5a93c6"/>
+    </svg>
+  </div>
+
+  <section class="steps" aria-label="Steps">
+    <div class="step"><span class="badge">1</span>Click “Claim Now”</div>
+    <div class="step"><span class="badge">2</span>Enter your email and basic info</div>
+    <div class="step"><span class="badge">3</span>Complete the simple verification</div>
+    <div class="step"><span class="badge">4</span>Enjoy your $500 Pandora reward</div>
+  </section>
+
+  <a class="cta" href="https://blitzrewarded.com/o/60/572779" target="_blank" rel="noopener">CLAIM NOW <span class="arrow">→</span></a>
+
+  <section class="vouches" aria-label="Member vouches">
+    <div class="eyebrow">MEMBER VOUCHES</div>
+    <h2>What <em>Members</em> Say</h2>
+    <div class="rating"><span class="stars">★★★★★</span><strong>4.9</strong><span class="count">· 8,241 reviews</span></div>
+
+    <article class="review">
+      <div class="rev-head">
+        <span class="avatar">J</span>
+        <div>
+          <div class="rev-name">Jessica R. <span class="verified">✓ Verified</span></div>
+          <div class="rev-meta">Miami, FL · 2 days ago</div>
+        </div>
+      </div>
+      <div class="rev-stars">★★★★★</div>
+      <p>Had my eye on the Moments bracelet for so long. Did the steps after lunch, reward code arrived within the hour. Got it in rose gold.</p>
+    </article>
+
+    <a class="cta" href="https://blitzrewarded.com/o/60/572779" target="_blank" rel="noopener">CLAIM NOW <span class="arrow">→</span></a>
+
+    <article class="review">
+      <div class="rev-head">
+        <span class="avatar">M</span>
+        <div>
+          <div class="rev-name">Maya K. <span class="verified">✓ Verified</span></div>
+          <div class="rev-meta">Los Angeles, CA · 1 week ago</div>
+        </div>
+      </div>
+      <div class="rev-stars">★★★★★</div>
+      <p>Honestly didn’t believe it until the email came through. Used mine on a charm set — would absolutely do it again without hesitation.</p>
+    </article>
+
+    <article class="review">
+      <div class="rev-head">
+        <span class="avatar">A</span>
+        <div>
+          <div class="rev-name">Ashley T. <span class="verified">✓ Verified</span></div>
+          <div class="rev-meta">Chicago, IL · 5 days ago</div>
+        </div>
+      </div>
+      <div class="rev-stars">★★★★★</div>
+      <p>Super easy process. Took maybe 5 minutes total. The $500 covered my entire holiday gift list this year — highly recommend claiming.</p>
+    </article>
+
+    <a class="cta" href="https://blitzrewarded.com/o/60/572779" target="_blank" rel="noopener">CLAIM NOW <span class="arrow">→</span></a>
+  </section>
+
+  <footer>
+    <p>Pandora is a trademark of Pandora A/S. This offer is not endorsed by or affiliated with Pandora A/S.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Sparkles ---- */
+  var layer = document.getElementById('sparkles');
+  if (layer && !reduced) {
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < 22; i++) {
+      var s = document.createElement('span');
+      var gold = Math.random() < 0.55;
+      var size = 2.5 + Math.random() * 3.5;
+      s.className = 'sparkle';
+      s.style.left = (Math.random() * 100) + 'vw';
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      s.style.background = gold ? '#d9b36c' : '#ffffff';
+      s.style.opacity = (0.14 + Math.random() * 0.3).toFixed(2);
+      if (gold) s.style.boxShadow = '0 0 6px rgba(217,179,108,.7)';
+      s.style.animationDuration = (13 + Math.random() * 9).toFixed(2) + 's';
+      s.style.animationDelay = (-Math.random() * 20).toFixed(2) + 's';
+      s.style.setProperty('--drift', (Math.random() * 90 - 45).toFixed(0) + 'px');
+      frag.appendChild(s);
+    }
+    layer.appendChild(frag);
+  }
+})();
+</script>
+</body>
+</html>
